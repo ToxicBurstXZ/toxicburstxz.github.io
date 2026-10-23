@@ -1,90 +1,901 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7890321327743446"
+     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Old - Nexus Games</title>
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="css/main.css">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7890321327743446"
-     crossorigin="anonymous"></script>
+    <title>META👾VOID</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://cdn.jsdelivr.net/gh/ToxicBurstXZ/img@main/profiles/m-v.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="hhttps://cdn.jsdelivr.net/gh/ToxicBurstXZ/img@main/profiles/m-v.png" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/ToxicBurstXZ/img@main/profiles/m-v.png" />
+    <style media="screen">
+        :root {
+            --white: #ffffff;
+            --glow-white: 0 0 6px #fff, 0 0 14px rgba(255, 255, 255, 0.5), 0 0 28px rgba(255, 255, 255, 0.2);
+            --glow-white-sm: 0 0 4px #fff, 0 0 8px rgba(255, 255, 255, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000;
+            overflow: hidden;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Black border vignette — fades inward from all edges, stops at ~78px (where corners would have ended) */
+        .page-border {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 40;
+            background:
+                linear-gradient(to right, black 0px, transparent 78px),
+                linear-gradient(to left, black 0px, transparent 78px),
+                linear-gradient(to bottom, black 0px, transparent 78px),
+                linear-gradient(to top, black 0px, transparent 78px);
+        }
+
+        /* HUD top bar */
+        .hud-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 200px;
+            z-index: 40;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.03), transparent);
+        }
+
+        .hud-bar span {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 18px;
+            color: var(--white);
+            opacity: 0.8;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .hud-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--white);
+            box-shadow: var(--glow-white-sm);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        /* Nav bar */
+        .nav-bar {
+            position: fixed;
+            top: 36px;
+            left: 0;
+            right: 0;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 88px;
+            z-index: 40;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent);
+        }
+
+        .nav-link {
+            position: relative;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            letter-spacing: 0.22em;
+            color: rgba(255, 255, 255, 0.65);
+            text-decoration: none;
+            padding: 0 0 6px 0;
+            transition: color 0.25s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 100%;
+            bottom: 0;
+            height: 1px;
+            background: #fff;
+            box-shadow: var(--glow-white-sm);
+            transition: right 0.25s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .nav-link:hover::after,
+        .nav-link:focus-visible::after {
+            right: 0;
+        }
+
+        .nav-link:focus-visible {
+            outline: 1px solid rgba(255, 255, 255, 0.6);
+            outline-offset: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .nav-bar {
+                gap: 36px;
+            }
+
+            .nav-link {
+                font-size: 11px;
+                letter-spacing: 0.14em;
+            }
+        }
+
+        /* Iframe overlay */
+        .iframe-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+        }
+
+        .iframe-overlay.active {
+            display: flex;
+        }
+
+        .iframe-panel {
+            position: relative;
+            width: min(1400px, 92vw);
+            height: min(720px, 86vh);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: var(--glow-white-sm), 0 0 60px rgba(0, 0, 0, 0.6);
+            background: #000;
+        }
+
+        .iframe-panel iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .iframe-error {
+            display: none;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 14px;
+            background: #000;
+        }
+
+        .iframe-error.active {
+            display: flex;
+        }
+
+        .iframe-error-text {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 0.08em;
+            color: #fff;
+            text-shadow: var(--glow-white-sm);
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .iframe-error-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 13px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .iframe-close {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: #000;
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 16px;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: var(--glow-white-sm);
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .iframe-close:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .iframe-close:focus-visible {
+            outline: 1px solid rgba(255, 255, 255, 0.6);
+            outline-offset: 3px;
+        }
+
+        /* Main container */
+        .container {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: auto;
+            overflow: visible;
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* Title */
+        .title {
+            font-family: 'Orbitron', monospace;
+            text-align: center;
+            color: #fff;
+            font-size: 80px;
+            font-weight: 900;
+            letter-spacing: .10em;
+            text-shadow: var(--glow-white);
+        }
+
+        #type {
+            white-space: nowrap;
+            overflow: hidden;
+            margin: 0 auto;
+            color: #fff;
+            letter-spacing: .15em;
+        }
+
+        .depth-left {
+            text-shadow: 1px 1px 0 #ddd, 2px 2px 0 #ccc, 3px 3px 0 #bbb, 4px 4px 0 #aaa, 5px 5px 0 #999, 6px 6px 0 #888, 7px 7px 0 #777, 8px 8px 0 #666, 9px 9px 0 #555, 10px 10px 0 #333, 0 0 6px #fff, 0 0 14px rgba(255, 255, 255, 0.5), 0 0 28px rgba(255, 255, 255, 0.2);
+        }
+
+        .depth-center {
+            text-shadow:
+                0 1px 0 #ddd, 0 2px 0 #ccc, 0 3px 0 #bbb,
+                0 4px 0 #aaa, 0 5px 0 #999, 0 6px 0 #888,
+                0 7px 0 #777, 0 8px 0 #666, 0 9px 0 #555,
+                0 10px 0 #333,
+                0 0 6px #fff, 0 0 14px rgba(255, 255, 255, 0.5), 0 0 28px rgba(255, 255, 255, 0.2);
+        }
+
+        .depth-right {
+            text-shadow:
+                -1px 1px 0 #ddd, -2px 2px 0 #ccc, -3px 3px 0 #bbb,
+                -4px 4px 0 #aaa, -5px 5px 0 #999, -6px 6px 0 #888,
+                -7px 7px 0 #777, -8px 8px 0 #666, -9px 9px 0 #555,
+                -10px 10px 0 #333,
+                0 0 6px #fff, 0 0 14px rgba(255, 255, 255, 0.5), 0 0 28px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Divider */
+        .tech-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 18px auto 20px;
+            width: 60%;
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 1.8s forwards;
+        }
+
+        .tech-divider::before,
+        .tech-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+        }
+
+        .tech-divider::before {
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6));
+        }
+
+        .tech-divider::after {
+            background: linear-gradient(to left, transparent, rgba(255, 255, 255, 0.6));
+        }
+
+        .divider-diamond {
+            width: 8px;
+            height: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transform: rotate(45deg);
+            box-shadow: var(--glow-white-sm);
+        }
+
+        /* Shifting subtext */
+        .shift-text-wrapper {
+            position: relative;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 2s forwards;
+        }
+
+        .shift-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 20px;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: var(--glow-white-sm);
+            position: absolute;
+        }
+
+        @keyframes glitchIn {
+            0% {
+                opacity: 0;
+                clip-path: inset(40% 0 40% 0);
+                transform: skewX(-8deg) translateX(-6px);
+            }
+
+            40% {
+                opacity: 1;
+                clip-path: inset(0% 0 0% 0);
+                transform: skewX(3deg) translateX(3px);
+            }
+
+            70% {
+                transform: skewX(-1deg) translateX(-1px);
+            }
+
+            100% {
+                opacity: 1;
+                clip-path: inset(0% 0 0% 0);
+                transform: skewX(0) translateX(0);
+            }
+        }
+
+        @keyframes glitchOut {
+            0% {
+                opacity: 1;
+                clip-path: inset(0% 0 0% 0);
+                transform: skewX(0);
+            }
+
+            40% {
+                opacity: 1;
+                clip-path: inset(20% 0 20% 0);
+                transform: skewX(5deg);
+            }
+
+            100% {
+                opacity: 0;
+                clip-path: inset(50% 0 50% 0);
+                transform: skewX(-10deg) translateX(8px);
+            }
+        }
+
+        .shift-text.entering {
+            animation: glitchIn 0.45s cubic-bezier(.22, .61, .36, 1) forwards;
+        }
+
+        .shift-text.leaving {
+            animation: glitchOut 0.35s cubic-bezier(.55, 0, 1, .45) forwards;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
-<style>
- .navbar ul{
- list-style: none;
- background: #000;
- margin: 0;
- padding: 0;
- text-align: center;
- }
- .navbar li{
- display: inline-block
- }
-  .navbar a{
- text-decoration: none;
- color: rgba(255, 255, 255, 0);
- width: 300px;
- display: block;
- padding: 20px;
- font-size: 30px;
- text-transform: uppercase;
- font-weight: bold;
- text-align: center;
- -webkit-text-stroke: 1px #FFFFFF;
- }
- .navbar a:hover:not(.active){
-  background-color: rgba(255, 255, 255, 1);
-  color: #000000;
-  border-radius: 15px;
-  transition: .3s;
- }
- @keyframes fadeInUp {
-  from {
-    transform: translate3d(0,-140px,0);
-  }
 
-  to {
-    transform: translate3d(0,0,0);
-    opacity: 1    
-  }
-}
-
-.animated {
-  animation-duration: 1s;
-  animation-fill-mode: both;
-}
-
-.animatedFadeInUp {
-  opacity: 0;
-}
-
-.fadeInUp {
-  opacity: 0;
-  animation-name: fadeInUp;
-}
-</style>
 <body>
- <div class="navbar animated animatedFadeInUp fadeInUp">
-   <ul>
-     <li><a href="/glist/index.html">Games</a></li>
-     <li><a href="#">Partners</a></li>
-     <li><a href="#">Proxys</a></li>
-     <li><a href="/gs-assets/files/about-us-v1.html">About Us</a></li>
-   <ul>
- </div>
-    <div class="container">
-        <h1 class="title" id="type"></h1>
-        <br>
-        <h2 class="testsentence">From the Owners of <a class="ct">Cooking Time</a> and <a class="tv">The Void.</a></h2>
+
+    <!-- Black border -->
+    <div class="page-border"></div>
+
+    <!-- top bar -->
+    <div class="hud-bar">
+        <span>Version 1.7.1</span>
+        <div class="hud-dot"></div>
+        <span id="hud-time">00:00:00</span>
     </div>
 
-    <script src=/js/shooting-stars.js></script>
-    <script src=/js/stars.js></script>
-    <script src=/js/typewriter.js></script>
-    <script src=js/shooting-stars.js></script>
-    <script src=js/stars.js></script>
-    <script src=js/typewriter.js></script>
+    <!-- Nav bar -->
+    <nav class="nav-bar">
+        <button class="nav-link" data-src="https://cdn.jsdelivr.net/gh/ToxicBurstXZ/gs-assets@main/files/games-v4.html">Games</button>
+        <button class="nav-link" data-src="https://cdn.jsdelivr.net/gh/ToxicBurstXZ/gs-assets@main/files/pokemon-v1.html">Pokemon</button>
+        <button class="nav-link" data-src="https://cdn.jsdelivr.net/gh/ToxicBurstXZ/gs-assets@main/files/UB-v1.html">Proxy</button>
+        <button class="nav-link" data-src="https://cdn.jsdelivr.net/gh/ToxicBurstXZ/gs-assets@main/files/about-us-v1.html">About Us</button>
+        <button class="nav-link" data-src="">Discord</button>
+    </nav>
+
+    <!-- Iframe overlay -->
+    <div class="iframe-overlay" id="iframe-overlay">
+        <div class="iframe-panel">
+            <button class="iframe-close" id="iframe-close" aria-label="Close">&#10005;</button>
+            <iframe id="page-frame" title="Page content" src=""></iframe>
+            <div class="iframe-error" id="iframe-error">
+                <div class="iframe-error-text">Error, this page doesn't exist!</div>
+                <div class="iframe-error-sub">Signal lost in the void</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <div class="container">
+        <h1 class="title">
+            <span id="type-left" class="depth-left"></span><span id="type-center" class="depth-center"></span><span id="type-right" class="depth-right"></span>
+        </h1>
+
+        <div class="tech-divider">
+            <div class="divider-diamond"></div>
+        </div>
+
+        <div class="shift-text-wrapper">
+            <div class="shift-text" id="shift-text"></div>
+        </div>
+    </div>
+
+    <!-- Typewriter -->
+    <script>
+        const segments = [{
+                text: "META",
+                el: "type-left"
+            },
+            {
+                text: "👾",
+                el: "type-center"
+            },
+            {
+                text: "VOID",
+                el: "type-right"
+            }
+        ];
+        const speed = 150;
+
+        function typeSegment(segIndex, charIndex) {
+            if (segIndex >= segments.length) return;
+            const seg = segments[segIndex];
+            if (charIndex < seg.text.length) {
+                document.getElementById(seg.el).innerHTML += seg.text.charAt(charIndex);
+                setTimeout(() => typeSegment(segIndex, charIndex + 1), speed);
+            } else {
+                typeSegment(segIndex + 1, 0);
+            }
+        }
+        window.onload = () => typeSegment(0, 0);
+    </script>
+
+    <!-- Nav iframe overlay -->
+    <script>
+        const overlay = document.getElementById('iframe-overlay');
+        const frame = document.getElementById('page-frame');
+        const closeBtn = document.getElementById('iframe-close');
+        const errorBox = document.getElementById('iframe-error');
+
+        let loadToken = 0;
+
+        async function openPage(src) {
+            const myToken = ++loadToken;
+
+            overlay.classList.add('active');
+            errorBox.classList.remove('active');
+            frame.style.display = 'none';
+            frame.src = '';
+
+            if (typeof window.pauseBackground === 'function') {
+                window.pauseBackground();
+            }
+
+            try {
+                const response = await fetch(src);
+
+                if (!response.ok) {
+                    throw new Error('Page could not be loaded');
+                }
+
+                // Get the actual HTML code from the file
+                const html = await response.text();
+
+                if (myToken !== loadToken) return;
+
+                // Create a Blob containing the HTML.
+                // This makes the browser interpret the contents as an HTML page.
+                const blob = new Blob([html], {
+                    type: 'text/html'
+                });
+
+                const blobUrl = URL.createObjectURL(blob);
+
+                // Load the interpreted HTML into the iframe
+                frame.src = blobUrl;
+                frame.style.display = 'block';
+
+                // Clean up the temporary URL when the iframe is closed
+                frame.dataset.blobUrl = blobUrl;
+
+            } catch (err) {
+                if (myToken !== loadToken) return;
+
+                console.error('Failed to load page:', err);
+
+                frame.style.display = 'none';
+                errorBox.classList.add('active');
+            }
+        }
+
+        function closePage() {
+            overlay.classList.remove('active');
+            errorBox.classList.remove('active');
+
+            // Clean up Blob URL
+            if (frame.dataset.blobUrl) {
+                URL.revokeObjectURL(frame.dataset.blobUrl);
+                delete frame.dataset.blobUrl;
+            }
+
+            frame.src = '';
+            frame.style.display = 'none';
+
+            if (typeof window.resumeBackground === 'function') {
+                window.resumeBackground();
+            }
+        }
+
+        document.querySelectorAll('.nav-link[data-src]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                openPage(link.dataset.src);
+            });
+        });
+
+        closeBtn.addEventListener('click', closePage);
+
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) {
+                closePage();
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) {
+                closePage();
+            }
+        });
+    </script>
+
+    <!-- Clock -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            document.getElementById('hud-time').textContent =
+                `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+    <!-- Shifting text -->
+    <script>
+        const phrases = ["Welcome to META👾VOID. Enjoy!", "MADE BY 2 IDIOTS", "YEH UPDATE!", "Crap forgot the proxy...", "Shattered Realms?"];
+        let currentIndex = 0;
+
+        function showPhrase(text) {
+            const wrapper = document.querySelector('.shift-text-wrapper');
+            const current = document.getElementById('shift-text');
+            current.className = 'shift-text leaving';
+
+            const next = document.createElement('div');
+            next.className = 'shift-text entering';
+            next.textContent = text;
+            wrapper.appendChild(next);
+
+            setTimeout(() => {
+                current.remove();
+                next.id = 'shift-text';
+                next.className = 'shift-text';
+            }, 500);
+        }
+
+        setTimeout(() => {
+            const el = document.getElementById('shift-text');
+            el.textContent = phrases[0];
+            el.className = 'shift-text entering';
+            setTimeout(() => {
+                el.className = 'shift-text';
+            }, 450);
+
+            setInterval(() => {
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * phrases.length);
+                } while (newIndex === currentIndex);
+                currentIndex = newIndex;
+                showPhrase(phrases[currentIndex]);
+            }, 4000);
+        }, 2200);
+    </script>
+
+    <!-- Black hole canvas -->
+    <script>
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        document.body.appendChild(canvas);
+
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.width = '100vw';
+        canvas.style.height = '100vh';
+        canvas.style.zIndex = '-1';
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let bhX = canvas.width / 2;
+        let bhY = canvas.height / 2;
+        const bhRadius = 144;
+        const pullStrength = 0.10;
+
+        class Star {
+            constructor() {
+                this.reset(true);
+            }
+            reset(initial = false) {
+                if (initial) {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                } else {
+                    const edge = Math.floor(Math.random() * 4);
+                    if (edge === 0) {
+                        this.x = Math.random() * canvas.width;
+                        this.y = 0;
+                    } else if (edge === 1) {
+                        this.x = canvas.width;
+                        this.y = Math.random() * canvas.height;
+                    } else if (edge === 2) {
+                        this.x = Math.random() * canvas.width;
+                        this.y = canvas.height;
+                    } else {
+                        this.x = 0;
+                        this.y = Math.random() * canvas.height;
+                    }
+                }
+                this.size = Math.random() * 2 + 2.5;
+                this.baseSize = this.size;
+                const dx = bhX - this.x;
+                const dy = bhY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const tangentStrength = Math.random() * 1.8 + 1.2;
+                this.vx = (dy / Math.max(dist, 1)) * tangentStrength;
+                this.vy = (-dx / Math.max(dist, 1)) * tangentStrength;
+                this.opacity = Math.random() * 0.5 + 0.5;
+            }
+            update() {
+                const dx = bhX - this.x;
+                const dy = bhY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const force = pullStrength * (1 + (500 / Math.max(dist, 1)));
+                this.vx += (dx / Math.max(dist, 1)) * force;
+                this.vy += (dy / Math.max(dist, 1)) * force;
+                const spd = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                if (spd > 18) {
+                    this.vx = (this.vx / spd) * 18;
+                    this.vy = (this.vy / spd) * 18;
+                }
+                this.x += this.vx;
+                this.y += this.vy;
+                const shrinkStart = bhRadius * 4;
+                if (dist < shrinkStart) {
+                    const t = 1 - dist / shrinkStart;
+                    this.size = this.baseSize * (1 - t * 0.92);
+                    this.opacity = 1 - t;
+                }
+                if (dist < bhRadius + 2) this.reset(false);
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = Math.max(0, this.opacity);
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, Math.max(0.1, this.size), 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        const stars = [];
+        for (let i = 0; i < 600; i++) stars.push(new Star());
+
+        let glowPulse = 0;
+        let holeHistory = [];
+        const maxGhosts = 8;
+        const ghostInterval = 4;
+        let frameCount = 0;
+        let rafId = null;
+        let bgPaused = false;
+
+        function traceHoleShape(phase) {
+            const points = 100;
+            const wobbleAmp = bhRadius * 0.02;
+
+            ctx.beginPath();
+            for (let i = 0; i <= points; i++) {
+                const angle = (i / points) * Math.PI * 2;
+                const wobble = Math.sin(angle * 4 - phase * 2) * wobbleAmp +
+                    Math.sin(angle * 9 - phase * 1.3) * wobbleAmp * 0.4;
+                const r = bhRadius + wobble;
+                const x = bhX + Math.cos(angle) * r;
+                const y = bhY + Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.closePath();
+        }
+
+        function drawBlackHole() {
+            glowPulse += 0.025;
+            const pulse = Math.sin(glowPulse) * 0.15 + 0.85;
+            const outerGlow = ctx.createRadialGradient(bhX, bhY, bhRadius * 0.5, bhX, bhY, bhRadius * 6 * pulse);
+            outerGlow.addColorStop(0, 'rgba(120, 0, 200, 0.25)');
+            outerGlow.addColorStop(0.4, 'rgba(80, 0, 160, 0.12)');
+            outerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.beginPath();
+            ctx.arc(bhX, bhY, bhRadius * 6 * pulse, 0, Math.PI * 2);
+            ctx.fillStyle = outerGlow;
+            ctx.fill();
+
+            const innerGlow = ctx.createRadialGradient(bhX, bhY, bhRadius * 0.8, bhX, bhY, bhRadius * 2.8 * pulse);
+            innerGlow.addColorStop(0, 'rgba(180, 0, 255, 0.85)');
+            innerGlow.addColorStop(0.35, 'rgba(130, 0, 220, 0.45)');
+            innerGlow.addColorStop(0.7, 'rgba(80, 0, 160, 0.15)');
+            innerGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.beginPath();
+            ctx.arc(bhX, bhY, bhRadius * 2.8 * pulse, 0, Math.PI * 2);
+            ctx.fillStyle = innerGlow;
+            ctx.fill();
+
+            const holeGrad = ctx.createRadialGradient(bhX, bhY, 0, bhX, bhY, bhRadius);
+            holeGrad.addColorStop(0, 'rgba(0,0,0,1)');
+            holeGrad.addColorStop(0.75, 'rgba(0,0,0,1)');
+            holeGrad.addColorStop(1, 'rgba(20,0,40,0.9)');
+            traceHoleShape(glowPulse);
+            ctx.fillStyle = holeGrad;
+            ctx.fill();
+        }
+
+        function drawHoleGhosts() {
+            for (let idx = 0; idx < holeHistory.length; idx++) {
+                const opacity = ((idx + 1) / holeHistory.length) * 0.18; // oldest = faintest
+                traceHoleShape(holeHistory[idx]);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity.toFixed(3)})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            }
+        }
+
+        function drawAccretionDisk() {
+            ctx.save();
+            ctx.translate(bhX, bhY);
+            ctx.scale(1, 0.3);
+
+            const points = 120;
+            const outerBase = bhRadius * 4.2;
+            const innerBase = bhRadius * 1.05;
+
+            ctx.beginPath();
+            // wobbly outer edge
+            for (let i = 0; i <= points; i++) {
+                const angle = (i / points) * Math.PI * 2;
+                const wobble = Math.sin(angle * 3 + glowPulse * 2) * bhRadius * 0.25 +
+                    Math.sin(angle * 7 + glowPulse * 1.3) * bhRadius * 0.1;
+                const r = outerBase + wobble;
+                const x = Math.cos(angle) * r;
+                const y = Math.sin(angle) * r;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            // wobbly inner hole (subtracted)
+            for (let i = 0; i <= points; i++) {
+                const angle = (i / points) * Math.PI * 2;
+                const wobble = Math.sin(angle * 3 + glowPulse * 2) * bhRadius * 0.08;
+                const r = innerBase + wobble;
+                const x = Math.cos(-angle) * r;
+                const y = Math.sin(-angle) * r;
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+
+            const diskGrad = ctx.createRadialGradient(0, 0, innerBase, 0, 0, outerBase * 1.3);
+            diskGrad.addColorStop(0, 'rgba(255, 210, 150, 0.9)');
+            diskGrad.addColorStop(0.4, 'rgba(255, 140, 60, 0.5)');
+            diskGrad.addColorStop(1, 'rgba(180, 0, 255, 0)');
+
+            ctx.fillStyle = diskGrad;
+            ctx.fill('evenodd'); // ← critical: tells canvas to punch the inner path out
+            ctx.restore();
+        }
+
+        function animate() {
+            if (bgPaused) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawAccretionDisk();
+
+            frameCount++;
+            if (frameCount % ghostInterval === 0) {
+                holeHistory.push(glowPulse);
+                if (holeHistory.length > maxGhosts) holeHistory.shift();
+            }
+            drawBlackHole(); // ← now first
+            drawHoleGhosts(); // ← now last, so ghosts sit on top
+
+            stars.forEach(s => {
+                s.update();
+                s.draw();
+            });
+            rafId = requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.pauseBackground = function() {
+            bgPaused = true;
+            if (rafId) cancelAnimationFrame(rafId);
+            canvas.style.display = 'none';
+        };
+
+        window.resumeBackground = function() {
+            if (!bgPaused) return;
+            bgPaused = false;
+            canvas.style.display = 'block';
+            animate();
+        };
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            bhX = canvas.width / 2;
+            bhY = canvas.height / 2;
+        });
+    </script>
+    <script> alert("Close the last page so that this site doesn't get Blocked. Thanks!"); </script>
 </body>
 
 </html>
